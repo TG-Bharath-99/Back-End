@@ -1,15 +1,17 @@
 from fastapi import FastAPI
-from .import models
-from .database import engine
-from .routers import blog,users,authentication
+import models
+from database import engine
+from routers import blog, user
 
-app=FastAPI()
 
 models.Base.metadata.create_all(engine)
 
-app.include_router(blog.router)
+app=FastAPI()
 
-app.include_router(users.router)
+app.include_router(blog.router, prefix="/blog", tags=["blog"])
+app.include_router(user.router, prefix="/user", tags=["user"])
 
-app.include_router(authentication.router)
 
+@app.get("/")
+def home():
+    return {"Msg":"Everything is Fine , chill bro"}
