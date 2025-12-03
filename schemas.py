@@ -70,16 +70,21 @@ class Login(BaseModel):
     password: str
 
 
-class CourseLogin(BaseModel):
-    email: str
-    password: str
-    course: CourseName
+class CourseLink(BaseModel):
+    title: str
+    url: str
 
 
-class CourseStatus(BaseModel):
+class CourseTopic(BaseModel):
+    id: int
+    name: str
+    links: List[CourseLink]
+
+
+class CourseTopics(BaseModel):
     course: CourseName
-    is_new: bool
-    message: str
+    topics: List[CourseTopic]
+
 
 
 class Token(BaseModel):
@@ -89,3 +94,12 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Optional[str] = None
+
+class Profile(BaseModel):
+    name: str
+    email: str
+    course: CourseName
+
+    class Config:
+        from_attributes = True
+
